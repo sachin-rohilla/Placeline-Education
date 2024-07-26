@@ -59,7 +59,32 @@ const useAuthApi = () => {
       setIsLoading(false);
     }
   };
-  return { signUpApi, loginApi, isLoading };
+
+  const logOutApi = async () => {
+    try {
+      const response = await fetch(`${API_URL}/api/auth/logout`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+      });
+      const data = await response.json();
+      if (!response.ok) {
+        const errorMessage = data?.message || "Something went wrong";
+        throw new Error(errorMessage);
+      }
+      localStorage.removeItem("authUser");
+      toast.success("Logout successfully");
+      setAuthUser(null);
+      navigate("/login");
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+  return { signUpApi, loginApi, logOutApi, isLoading };
 };
 
 export default useAuthApi;

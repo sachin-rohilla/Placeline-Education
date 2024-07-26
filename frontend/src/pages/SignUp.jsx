@@ -6,12 +6,12 @@ import { IoMdEye, IoMdEyeOff } from "react-icons/io";
 import { signupValidationSchema } from "../utils/FormSchema";
 import loginBgImage from "../assets/login.png";
 import useAuthApi from "../customHooks/useAuthApi";
-import Loader from "../Components/Loader";
 
 const SignUp = () => {
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
   const { isLoading, signUpApi } = useAuthApi();
 
   const {
@@ -199,25 +199,17 @@ const SignUp = () => {
                   disabled={isLoading}
                   className="btn btn-accent w-full text-white "
                 >
-                  {!isLoading ? <Loader /> : "Sign Up"}
+                  {isLoading ? "Loading..." : "Sign Up"}
                 </button>
               </div>
             </form>
 
-            <p className="mt-4 text-center text-sm third-main">
-              Already have an account?{" "}
-              <button
-                id="login"
-                title="Sign In"
-                type="button"
-                onClick={() => navigate("/login")}
-                className={`font-semibold leading-6 text-accent ${
-                  isLoading ? "cursor-not-allowed" : "cursor-pointer"
-                }`}
-              >
-                Sign in
-              </button>
-            </p>
+            <div
+              onClick={() => navigate("/login")}
+              className="divider text-sm font-medium text-accent cursor-pointer"
+            >
+              OR LOGIN
+            </div>
           </div>
         </div>
       </div>

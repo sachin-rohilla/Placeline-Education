@@ -1,10 +1,21 @@
 import React from "react";
+import { useAppContext } from "../context/AppContext";
+import useAuthApi from "../customHooks/useAuthApi";
+import { useNavigate } from "react-router";
 
 const Navbar = () => {
+  const navigate = useNavigate();
+  const { authUser } = useAppContext();
+  const { isLoading, logOutApi } = useAuthApi();
+  const handleLogOut = () => {
+    logOutApi();
+  };
   return (
-    <div className="navbar bg-base-100">
+    <div className="navbar bg-base-100 absolute top-0 w-full z-10 shadow-lg">
       <div className="flex-1">
-        <a className="btn btn-ghost text-xl">daisyUI</a>
+        <button onClick={() => navigate("/")} className="btn btn-ghost text-xl">
+          daisyUI
+        </button>
       </div>
       <div className="flex-none gap-2">
         <div className="form-control">
@@ -23,7 +34,10 @@ const Navbar = () => {
             <div className="w-10 rounded-full">
               <img
                 alt="Tailwind CSS Navbar component"
-                src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
+                src={
+                  (authUser && authUser?.profilePic) ||
+                  "https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
+                }
               />
             </div>
           </div>
@@ -41,7 +55,9 @@ const Navbar = () => {
               <a>Settings</a>
             </li>
             <li>
-              <a>Logout</a>
+              <button id="logout" title="Logout" onClick={handleLogOut}>
+                Logout
+              </button>
             </li>
           </ul>
         </div>

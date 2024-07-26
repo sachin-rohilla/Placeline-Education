@@ -9,6 +9,7 @@ import useAuthApi from "../customHooks/useAuthApi";
 const Login = () => {
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
+
   const { isLoading, loginApi } = useAuthApi();
   const {
     handleSubmit,
@@ -27,8 +28,6 @@ const Login = () => {
     setShowPassword((prevShowPassword) => !prevShowPassword);
   };
 
-  useEffect(() => {}, []);
-
   return (
     <div className="flex w-full h-screen">
       <div className="flex-1 hidden lg:flex">
@@ -39,19 +38,6 @@ const Login = () => {
         />
       </div>
       <div className="flex min-h-screen flex-1 flex-col justify-center px-6 py-12 lg:px-8">
-        <p className="absolute top-4 right-4 text-right text-xs xl:text-sm third-main">
-          Not a member?{" "}
-          <button
-            id="sign-up"
-            title="Create an account"
-            onClick={() => navigate("/signup")}
-            className={`font-semibold leading-6 text-accent ${
-              isLoading ? "cursor-not-allowed" : "cursor-pointer"
-            }`}
-          >
-            Register Now
-          </button>
-        </p>
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
           <h2 className="mt-4 text-center text-xl font-bold leading-9 tracking-tight">
             Welcome Back 😊
@@ -142,6 +128,12 @@ const Login = () => {
               </button>
             </div>
           </form>
+          <div
+            onClick={() => navigate("/signup")}
+            className="divider text-sm font-medium text-accent cursor-pointer"
+          >
+            OR SIGNUP
+          </div>
         </div>
       </div>
     </div>
