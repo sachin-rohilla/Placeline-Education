@@ -1,8 +1,10 @@
 import { lazy, Suspense } from "react";
-import "./App.css";
 import { Route, Routes } from "react-router";
+import { Toaster } from "react-hot-toast";
+
 import Loader from "./Components/Loader";
-import Navbar from "./Components/Navbar";
+
+import "./App.css";
 
 function App() {
   const Login = lazy(() => import("./pages/Login"));
@@ -10,8 +12,6 @@ function App() {
   const Home = lazy(() => import("./pages/Home"));
   return (
     <div className="">
-      {/* <Navbar /> */}
-
       <Suspense fallback={<Loader />}>
         <Routes>
           <Route path="/" element={<Home />} />
@@ -19,6 +19,7 @@ function App() {
           <Route path="/signup" element={<SignUp />} />
         </Routes>
       </Suspense>
+      <Toaster />
     </div>
   );
 }

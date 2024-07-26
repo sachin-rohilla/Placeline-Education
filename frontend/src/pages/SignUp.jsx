@@ -5,12 +5,14 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { IoMdEye, IoMdEyeOff } from "react-icons/io";
 import { signupValidationSchema } from "../utils/FormSchema";
 import loginBgImage from "../assets/login.png";
+import useAuthApi from "../customHooks/useAuthApi";
+import Loader from "../Components/Loader";
 
 const SignUp = () => {
-  const isLoading = false;
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const { isLoading, signUpApi } = useAuthApi();
 
   const {
     handleSubmit,
@@ -23,11 +25,14 @@ const SignUp = () => {
   });
 
   const onSubmit = async (data) => {
-    const { fullName, password } = data;
+    const { fullName, password, email } = data;
     const payload = {
       fullName,
       password,
+      email,
     };
+
+    await signUpApi(payload);
     // reset()
   };
 
@@ -194,7 +199,7 @@ const SignUp = () => {
                   disabled={isLoading}
                   className="btn btn-accent w-full text-white "
                 >
-                  {isLoading ? <MiniLoader /> : "Sign Up"}
+                  {!isLoading ? <Loader /> : "Sign Up"}
                 </button>
               </div>
             </form>

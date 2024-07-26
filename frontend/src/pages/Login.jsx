@@ -5,10 +5,11 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { IoMdEye, IoMdEyeOff } from "react-icons/io";
 import { loginValidationSchema } from "../utils/FormSchema";
 import loginBgImage from "../assets/login.png";
+import useAuthApi from "../customHooks/useAuthApi";
 const Login = () => {
-  const isLoading = false;
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
+  const { isLoading, loginApi } = useAuthApi();
   const {
     handleSubmit,
     reset,
@@ -19,7 +20,7 @@ const Login = () => {
   });
 
   const onSubmit = async (data) => {
-    // reset();
+    await loginApi(data);
   };
 
   const togglePasswordVisibility = () => {
@@ -137,7 +138,7 @@ const Login = () => {
                 disabled={isLoading}
                 className="btn btn-accent w-full text-white "
               >
-                {isLoading ? <MiniLoader /> : "Login"}
+                {isLoading ? "Loading..." : "Login"}
               </button>
             </div>
           </form>
