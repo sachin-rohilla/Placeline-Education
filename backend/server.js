@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 import cors from "cors";
 import connectToMongoDB from "./db/connectToMongoDB.js";
 import authRouter from "./routes/auth_routes.js";
+import courseRouter from "./routes/course_routes.js";
 
 dotenv.config();
 
@@ -18,6 +19,7 @@ app.use(
 app.use(express.json());
 
 app.use("/api/auth", authRouter);
+app.use("/api", courseRouter);
 
 app.get("/", (req, res) => {
   res.send("Hello World!");

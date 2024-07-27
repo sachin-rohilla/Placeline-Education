@@ -42,3 +42,30 @@ export const signupValidationSchema = yup.object().shape({
     .oneOf([yup.ref("password"), null], "Passwords must match")
     .required("Confirm Password is required"),
 });
+export const addCourseValidationSchema = yup.object().shape({
+  courseName: yup
+    .string()
+    .trim()
+    .min(3, "Course Name must be at least 3 characters")
+    .required("Course Name is required"),
+
+  description: yup
+    .string()
+    .trim()
+    .min(10, "Description must be at least 10 characters")
+    .required("Description is required"),
+
+  price: yup
+    .number()
+    .positive("Price must be a positive number")
+    .min(500, "Price must be at least 500")
+    .max(10000, "Price must be at most 10000")
+    .required("Price is required"),
+
+  tags: yup
+    .array()
+    .of(yup.string().trim().min(1, "Tag cannot be empty"))
+    .min(1, "At least one tag is required")
+    .required("Tags are required"),
+  image: yup.string().url("Invalid image URL").required("Image is required"),
+});
