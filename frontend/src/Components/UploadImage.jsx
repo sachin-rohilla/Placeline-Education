@@ -27,7 +27,7 @@ const UploadImage = ({ image, onUpload, onDelete }) => {
         id="upload"
         title="Upload Image"
         onClick={handleUpload}
-        className="btn btn-ghost"
+        className="btn btn-ghost bg-accent text-white"
       >
         Upload Image
       </button>

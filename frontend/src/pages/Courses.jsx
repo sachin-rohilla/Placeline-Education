@@ -8,7 +8,11 @@ import { MdDelete } from "react-icons/md";
 const Courses = () => {
   const navigate = useNavigate();
   const { courses, isDark, authUser } = useAppContext();
-  const { getCoursesApi, isLoading } = useCoursesApi();
+  const { getCoursesApi, deleteCourseApi, isLoading } = useCoursesApi();
+
+  const handleCourseDelete = async (courseId) => {
+    await deleteCourseApi(courseId);
+  };
 
   useEffect(() => {
     getCoursesApi();
@@ -60,13 +64,19 @@ const Courses = () => {
                 />
               </figure>
               <div className={`card-body p-4 ${isDark ? "bg-neutral" : ""}`}>
-                <h2 className="card-title text-lg font-semibold flex justify-between capitalize items-center">
-                  {course?.courseName}
+                <h2 className="card-title  text-lg font-semibold flex justify-between capitalize items-center">
+                  {course?.courseName?.length > 20 ? (
+                    <>{course?.courseName?.slice(0, 20)}...</>
+                  ) : (
+                    <>{course?.courseName}</>
+                  )}
                   <div className="badge badge-secondary text-sm">NEW</div>
                 </h2>
-                <p className="mt-2 text-sm">{course?.description}</p>
-                <div className="card-actions mt-4 justify-between flex flex-wrap gap-2">
-                  <div className="flex items-center gap-2 flex-wrap">
+                <p className="mt-2 text-sm line-clamp-6">
+                  {course?.description}
+                </p>
+                <div className=" mt-4 flex justify-between items-start gap-2">
+                  <div className="flex items-center gap-2 flex-wrap ">
                     {course?.tags?.length > 0 &&
                       course?.tags?.map((tag, index) => (
                         <div
@@ -80,7 +90,10 @@ const Courses = () => {
                   {authUser?._id === "66a37293d6c9e1a405de3d37" && (
                     <div className="flex items-center gap-2">
                       <RiEditCircleFill className="text-xl cursor-pointer" />
-                      <MdDelete className="text-xl cursor-pointer" />
+                      <MdDelete
+                        className="text-xl cursor-pointer"
+                        onClick={() => handleCourseDelete(course?._id)}
+                      />
                     </div>
                   )}
                 </div>

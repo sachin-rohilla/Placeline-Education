@@ -31,3 +31,19 @@ export const getCourses = async (req, res) => {
     return res.status(500).json({ message: "Internal server error" });
   }
 };
+
+export const deleteCourse = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const course = await Course.findByIdAndDelete(id);
+    if (!course) {
+      return res.status(404).json({ message: "Course not found" });
+    }
+    return res
+      .status(200)
+      .json({ message: "Course deleted successfully", course });
+  } catch (error) {
+    console.error("Error in deteleCourse controller", error?.message);
+    return res.status(500).json({ message: "Internal server error" });
+  }
+};

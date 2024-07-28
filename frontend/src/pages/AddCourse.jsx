@@ -6,6 +6,9 @@ import UploadImage from "../Components/UploadImage";
 import { addCourseValidationSchema } from "../utils/FormSchema";
 import useCoursesApi from "../customHooks/useCoursesApi";
 
+import Loader from "../Components/Loader";
+import { IoIosClose } from "react-icons/io";
+
 const AddCourse = () => {
   const [tagInput, setTagInput] = useState("");
   const { createCourseApi, isLoading } = useCoursesApi();
@@ -82,9 +85,15 @@ const AddCourse = () => {
       return false;
     }
   };
+  if (isLoading) {
+    return <Loader />;
+  }
 
   return (
     <div>
+      <h1 className="text-xl lg:text-2xl font-bold mb-4 text-center">
+        Add Course
+      </h1>
       <form
         className="space-y-6"
         method="POST"
@@ -99,9 +108,7 @@ const AddCourse = () => {
                 {...field}
                 type="text"
                 id="courseName"
-                className={`input input-bordered w-full text-sm ${
-                  errors.courseName ? "border-red-500" : ""
-                }`}
+                className={`input input-bordered w-full text-sm `}
                 placeholder="Enter your course name"
               />
             )}
@@ -121,9 +128,7 @@ const AddCourse = () => {
               <textarea
                 {...field}
                 rows="5"
-                className={`textarea textarea-bordered resize-none w-full text-sm ${
-                  errors.description ? "border-red-500" : ""
-                }`}
+                className={`textarea textarea-bordered resize-none w-full text-sm `}
                 placeholder="Enter your course description"
               />
             )}
@@ -144,11 +149,9 @@ const AddCourse = () => {
                 {...field}
                 type="number"
                 min={500}
-                max={10000}
+                max={20000}
                 id="price"
-                className={`input input-bordered w-full text-sm ${
-                  errors.price ? "border-red-500" : ""
-                }`}
+                className={`input input-bordered w-full text-sm `}
                 placeholder="Enter your course price"
               />
             )}
@@ -175,21 +178,18 @@ const AddCourse = () => {
                     e.key === "Enter" && handleAddTag(e, tagInput, field.value)
                   }
                 />
-                <div className="mt-2">
+                <div className="mt-3 flex items-center gap-2 flex-wrap">
                   {field.value.map((tag, index) => (
-                    <span
+                    <div
+                      className="badge capitalize badge-accent badge-outline flex items-center gap-1"
                       key={index}
-                      className="inline-block bg-gray-200 text-gray-700 rounded-full px-3 py-1 text-sm font-semibold mr-2 mb-2"
                     >
                       {tag}
-                      <button
-                        type="button"
-                        className="ml-2 text-red-500"
+                      <IoIosClose
+                        className="cursor-pointer text-xl"
                         onClick={() => handleRemoveTag(tag, field.value)}
-                      >
-                        &times;
-                      </button>
-                    </span>
+                      />
+                    </div>
                   ))}
                 </div>
               </div>

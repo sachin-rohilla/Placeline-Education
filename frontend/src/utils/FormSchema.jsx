@@ -57,7 +57,7 @@ export const addCourseValidationSchema = yup.object().shape({
     .number()
     .positive("Price must be a positive number")
     .min(500, "Price must be at least 500")
-    .max(10000, "Price must be at most 10000")
+    .max(10000, "Price must be at most 20000")
     .required("Price is required"),
   tags: yup
     .array()
