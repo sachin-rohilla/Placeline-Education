@@ -1,44 +1,86 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import React, { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
-import { addCourseValidationSchema } from "../utils/FormSchema";
 import UploadImage from "../Components/UploadImage";
 
+import { addCourseValidationSchema } from "../utils/FormSchema";
+import useCoursesApi from "../customHooks/useCoursesApi";
+
 const AddCourse = () => {
-  const [tags, setTags] = useState([]);
   const [tagInput, setTagInput] = useState("");
-  const [image, setImage] = useState("");
+  const { createCourseApi, isLoading } = useCoursesApi();
   const {
     handleSubmit,
-    reset,
     control,
+    setValue,
+    setError,
+    clearErrors,
+    reset,
     formState: { errors },
   } = useForm({
     resolver: yupResolver(addCourseValidationSchema),
+    defaultValues: {
+      tags: [],
+      image: "",
+    },
   });
-
-  const onSubmit = async (data) => {
-    console.log({ ...data, tags, image });
+  const handleResetForm = () => {
+    reset({
+      tags: [],
+      image: "",
+      price: "",
+      description: "",
+      courseName: "",
+    });
   };
 
-  const handleAddTag = (e) => {
+  const onSubmit = async (data) => {
+    createCourseApi(data, handleResetForm);
+  };
+
+  const handleAddTag = (e, tagInput, tags) => {
     e.preventDefault();
-    if (tagInput && !tags.includes(tagInput)) {
-      setTags([...tags, tagInput]);
-      setTagInput("");
+    if (tagInput) {
+      if (tags.includes(tagInput)) {
+        setError("tags", { type: "manual", message: "Tag already exists" });
+      } else {
+        const newTags = [...tags, tagInput];
+        setValue("tags", newTags);
+        clearErrors("tags");
+        setTagInput("");
+      }
+    } else {
+      setError("tags", { type: "manual", message: "Tag cannot be empty" });
     }
   };
 
-  const handleRemoveTag = (tagToRemove) => {
-    setTags(tags.filter((tag) => tag !== tagToRemove));
+  const handleRemoveTag = (tagToRemove, tags) => {
+    const updatedTags = tags.filter((tag) => tag !== tagToRemove);
+    setValue("tags", updatedTags);
+    clearErrors("tags");
   };
 
   const handleImageUpload = (imageUrl) => {
-    setImage(imageUrl);
+    if (imageUrl && isValidURL(imageUrl)) {
+      setValue("image", imageUrl);
+      clearErrors("image");
+    } else {
+      setError("image", { type: "manual", message: "Invalid image URL" });
+    }
   };
 
   const handleImageDelete = () => {
-    setImage("");
+    setValue("image", "");
+    clearErrors("image");
+  };
+
+  const isValidURL = (url) => {
+    try {
+      new URL(url);
+      return true;
+    } catch {
+      return false;
+    }
   };
 
   return (
@@ -57,7 +99,6 @@ const AddCourse = () => {
                 {...field}
                 type="text"
                 id="courseName"
-                autoComplete="courseName"
                 className={`input input-bordered w-full text-sm ${
                   errors.courseName ? "border-red-500" : ""
                 }`}
@@ -71,6 +112,7 @@ const AddCourse = () => {
             </p>
           )}
         </div>
+
         <div className="mt-2">
           <Controller
             name="description"
@@ -78,9 +120,6 @@ const AddCourse = () => {
             render={({ field }) => (
               <textarea
                 {...field}
-                type="text"
-                id="description"
-                autoComplete="description"
                 rows="5"
                 className={`textarea textarea-bordered resize-none w-full text-sm ${
                   errors.description ? "border-red-500" : ""
@@ -95,6 +134,7 @@ const AddCourse = () => {
             </p>
           )}
         </div>
+
         <div className="mt-2">
           <Controller
             name="price"
@@ -106,7 +146,6 @@ const AddCourse = () => {
                 min={500}
                 max={10000}
                 id="price"
-                autoComplete="price"
                 className={`input input-bordered w-full text-sm ${
                   errors.price ? "border-red-500" : ""
                 }`}
@@ -120,41 +159,58 @@ const AddCourse = () => {
         </div>
 
         <div className="mt-2">
-          <input
-            type="text"
-            value={tagInput}
-            onChange={(e) => setTagInput(e.target.value)}
-            className="input input-bordered w-full text-sm"
-            placeholder="Enter a tag and press enter"
-            onKeyDown={(e) => e.key === "Enter" && handleAddTag(e)}
+          <Controller
+            name="tags"
+            control={control}
+            render={({ field }) => (
+              <div>
+                <input
+                  type="text"
+                  id="tagInput"
+                  value={tagInput}
+                  onChange={(e) => setTagInput(e.target.value)}
+                  className="input input-bordered w-full text-sm"
+                  placeholder="Enter a tag and press enter"
+                  onKeyDown={(e) =>
+                    e.key === "Enter" && handleAddTag(e, tagInput, field.value)
+                  }
+                />
+                <div className="mt-2">
+                  {field.value.map((tag, index) => (
+                    <span
+                      key={index}
+                      className="inline-block bg-gray-200 text-gray-700 rounded-full px-3 py-1 text-sm font-semibold mr-2 mb-2"
+                    >
+                      {tag}
+                      <button
+                        type="button"
+                        className="ml-2 text-red-500"
+                        onClick={() => handleRemoveTag(tag, field.value)}
+                      >
+                        &times;
+                      </button>
+                    </span>
+                  ))}
+                </div>
+              </div>
+            )}
           />
-          <div className="mt-2">
-            {tags.map((tag, index) => (
-              <span
-                key={index}
-                className="inline-block bg-gray-200 text-gray-700 rounded-full px-3 py-1 text-sm font-semibold mr-2 mb-2"
-              >
-                {tag}
-                <button
-                  type="button"
-                  className="ml-2 text-red-500"
-                  onClick={() => handleRemoveTag(tag)}
-                >
-                  &times;
-                </button>
-              </span>
-            ))}
-          </div>
           {errors.tags && (
             <p className="text-error text-sm mt-2">{errors.tags.message}</p>
           )}
         </div>
 
         <div className="mt-2">
-          <UploadImage
-            image={image}
-            onUpload={handleImageUpload}
-            onDelete={handleImageDelete}
+          <Controller
+            name="image"
+            control={control}
+            render={({ field }) => (
+              <UploadImage
+                image={field.value}
+                onUpload={handleImageUpload}
+                onDelete={handleImageDelete}
+              />
+            )}
           />
           {errors.image && (
             <p className="text-error text-sm mt-2">{errors.image.message}</p>
