@@ -47,3 +47,40 @@ export const deleteCourse = async (req, res) => {
     return res.status(500).json({ message: "Internal server error" });
   }
 };
+
+export const getCourseById = async (req, res) => {
+  try {
+    const { id } = req.query;
+    const course = await Course.findById(id);
+    if (!course) {
+      return res.status(404).json({ message: "Course not found" });
+    }
+    return res
+      .status(200)
+      .json({ message: "Course fetched successfully", course });
+  } catch (error) {
+    console.error("Error in getCourseById controller", error?.message);
+    return res.status(500).json({ message: "Internal server error" });
+  }
+};
+
+export const updateCourse = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { courseName, description, image, price, tags } = req.body;
+    const course = await Course.findByIdAndUpdate(
+      id,
+      { courseName, description, image, price, tags },
+      { new: true }
+    );
+    if (!course) {
+      return res.status(404).json({ message: "Course not found" });
+    }
+    return res
+      .status(200)
+      .json({ message: "Course updated successfully", course });
+  } catch (error) {
+    console.error("Error in updateCourse controller", error?.message);
+    return res.status(500).json({ message: "Internal server error" });
+  }
+};

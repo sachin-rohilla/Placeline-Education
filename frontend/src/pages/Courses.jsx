@@ -89,7 +89,12 @@ const Courses = () => {
                   </div>
                   {authUser?._id === "66a37293d6c9e1a405de3d37" && (
                     <div className="flex items-center gap-2">
-                      <RiEditCircleFill className="text-xl cursor-pointer" />
+                      <RiEditCircleFill
+                        className="text-xl cursor-pointer"
+                        onClick={() =>
+                          navigate(`/edit-course/?id=${course?._id}`)
+                        }
+                      />
                       <MdDelete
                         className="text-xl cursor-pointer"
                         onClick={() => handleCourseDelete(course?._id)}

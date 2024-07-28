@@ -4,10 +4,12 @@ import { toast } from "react-hot-toast";
 import { useAppContext } from "../context/AppContext";
 import Swal from "sweetalert2/dist/sweetalert2.js";
 import "sweetalert2/src/sweetalert2.scss";
+import { useNavigate } from "react-router";
 
 const useCoursesApi = () => {
+  const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
-  const { setCourses } = useAppContext();
+  const { setCourses, setEditCourseData } = useAppContext();
   const createCourseApi = async (payload, reset) => {
     try {
       setIsLoading(true);
@@ -29,6 +31,7 @@ const useCoursesApi = () => {
 
       toast.success("Course created successfully");
       reset();
+      navigate("/courses");
     } catch (error) {
       console.error(error);
       toast.error(error?.message || "Something went wrong!");
@@ -59,6 +62,31 @@ const useCoursesApi = () => {
       setIsLoading(false);
     }
   };
+
+  const getCourseByIdApi = async (id) => {
+    try {
+      setIsLoading(true);
+      const response = await fetch(`${API_URL}/api/course/?id=${id}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+      });
+      const data = await response.json();
+      if (!response.ok) {
+        const errorMessage = data?.message || "Something went wrong!";
+        throw new Error(errorMessage);
+      }
+      setEditCourseData(data?.course);
+    } catch (error) {
+      console.error(error);
+      toast.error(error?.message || "Something went wrong!");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   const deleteCourseApi = async (courseId) => {
     try {
       setIsLoading(true);
@@ -93,6 +121,34 @@ const useCoursesApi = () => {
       setIsLoading(false);
     }
   };
+
+  const updateCourseApi = async (payload, courseId, reset) => {
+    try {
+      setIsLoading(true);
+      const response = await fetch(`${API_URL}/api/update-course/${courseId}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+        body: JSON.stringify(payload),
+      });
+      const data = await response.json();
+      if (!response.ok) {
+        const errorMessage = data?.message || "Something went wrong!";
+        throw new Error(errorMessage);
+      }
+      reset();
+      toast.success("Course updated successfully");
+      getCoursesApi();
+      navigate("/courses");
+    } catch (error) {
+      console.error(error);
+      toast.error(error?.message || "Something went wrong!");
+    } finally {
+      setIsLoading(false);
+    }
+  };
   const confirm = async () => {
     const result = await Swal.fire({
       title: "Are you sure?",
@@ -106,7 +162,15 @@ const useCoursesApi = () => {
 
     return result.isConfirmed;
   };
-  return { createCourseApi, getCoursesApi, deleteCourseApi, isLoading };
+
+  return {
+    createCourseApi,
+    getCoursesApi,
+    getCourseByIdApi,
+    deleteCourseApi,
+    updateCourseApi,
+    isLoading,
+  };
 };
 
 export default useCoursesApi;

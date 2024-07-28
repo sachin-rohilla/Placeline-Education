@@ -10,13 +10,23 @@ export const AppContextProvider = ({ children }) => {
     JSON.parse(localStorage.getItem("isDark")) || false
   );
   const [courses, setCourses] = useState([]);
+  const [editCourseData, setEditCourseData] = useState(null);
   useEffect(() => {
     document.body.setAttribute("data-theme", isDark ? "dark" : "light");
     localStorage.setItem("isDark", JSON.stringify(isDark));
   }, [isDark]);
   return (
     <AppContext.Provider
-      value={{ authUser, setAuthUser, isDark, setIsDark, courses, setCourses }}
+      value={{
+        authUser,
+        setAuthUser,
+        isDark,
+        setIsDark,
+        courses,
+        setCourses,
+        editCourseData,
+        setEditCourseData,
+      }}
     >
       {children}
     </AppContext.Provider>
