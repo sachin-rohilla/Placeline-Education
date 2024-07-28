@@ -3,10 +3,11 @@ import { useNavigate } from "react-router";
 import useCoursesApi from "../customHooks/useCoursesApi";
 import { useAppContext } from "../context/AppContext";
 import CourseSkeleton from "../Components/CourseSkeleton";
-
+import { RiEditCircleFill } from "react-icons/ri";
+import { MdDelete } from "react-icons/md";
 const Courses = () => {
   const navigate = useNavigate();
-  const { courses } = useAppContext();
+  const { courses, isDark, authUser } = useAppContext();
   const { getCoursesApi, isLoading } = useCoursesApi();
 
   useEffect(() => {
@@ -26,15 +27,20 @@ const Courses = () => {
   }
 
   return (
-    <div className="p-4 sm:p-6 lg:p-8">
-      <button
-        id="add-course"
-        title="Add Course"
-        onClick={() => navigate("/add-course")}
-        className="btn bg-accent text-white w-full sm:w-44"
-      >
-        Add Course
-      </button>
+    <div className="">
+      {authUser?._id === "66a37293d6c9e1a405de3d37" && (
+        <div className="w-full flex justify-end">
+          <button
+            id="add-course"
+            title="Add Course"
+            onClick={() => navigate("/add-course")}
+            className="btn bg-accent text-white w-full sm:w-44 mb-4"
+          >
+            Add Course
+          </button>
+        </div>
+      )}
+      <h1 className="text-3xl font-bold mb-4 text-center">Premium Courses</h1>
 
       <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {isLoading ? (
@@ -53,19 +59,30 @@ const Courses = () => {
                   className="w-full h-48 object-cover"
                 />
               </figure>
-              <div className="card-body p-4">
-                <h2 className="card-title text-lg font-semibold flex justify-between items-center">
+              <div className={`card-body p-4 ${isDark ? "bg-neutral" : ""}`}>
+                <h2 className="card-title text-lg font-semibold flex justify-between capitalize items-center">
                   {course?.courseName}
                   <div className="badge badge-secondary text-sm">NEW</div>
                 </h2>
                 <p className="mt-2 text-sm">{course?.description}</p>
-                <div className="card-actions mt-4 flex flex-wrap gap-2">
-                  {course?.tags?.length > 0 &&
-                    course?.tags?.map((tag, index) => (
-                      <div key={index} className="badge badge-outline text-sm">
-                        {tag}
-                      </div>
-                    ))}
+                <div className="card-actions mt-4 justify-between flex flex-wrap gap-2">
+                  <div className="flex items-center gap-2 flex-wrap">
+                    {course?.tags?.length > 0 &&
+                      course?.tags?.map((tag, index) => (
+                        <div
+                          key={index}
+                          className="badge capitalize badge-outline text-sm"
+                        >
+                          {tag}
+                        </div>
+                      ))}
+                  </div>
+                  {authUser?._id === "66a37293d6c9e1a405de3d37" && (
+                    <div className="flex items-center gap-2">
+                      <RiEditCircleFill className="text-xl cursor-pointer" />
+                      <MdDelete className="text-xl cursor-pointer" />
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
