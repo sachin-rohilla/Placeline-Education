@@ -9,12 +9,15 @@ export const AppContextProvider = ({ children }) => {
   const [isDark, setIsDark] = useState(
     JSON.parse(localStorage.getItem("isDark")) || false
   );
+  const [courses, setCourses] = useState([]);
   useEffect(() => {
     document.body.setAttribute("data-theme", isDark ? "dark" : "light");
     localStorage.setItem("isDark", JSON.stringify(isDark));
   }, [isDark]);
   return (
-    <AppContext.Provider value={{ authUser, setAuthUser, isDark, setIsDark }}>
+    <AppContext.Provider
+      value={{ authUser, setAuthUser, isDark, setIsDark, courses, setCourses }}
+    >
       {children}
     </AppContext.Provider>
   );
