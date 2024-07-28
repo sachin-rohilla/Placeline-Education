@@ -2,11 +2,12 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { IoMdEye, IoMdEyeOff } from "react-icons/io";
+import { IoMdArrowBack, IoMdEye, IoMdEyeOff } from "react-icons/io";
 import { signupValidationSchema } from "../utils/FormSchema";
 import loginBgImage from "../assets/login.png";
 import useAuthApi from "../customHooks/useAuthApi";
 import GoogleAuth from "../Components/GoogleAuth";
+import Theme from "../Components/Theme";
 
 const SignUp = () => {
   const navigate = useNavigate();
@@ -59,16 +60,41 @@ const SignUp = () => {
           />
         </div>
 
-        <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
+        <div className="flex relative min-h-full flex-1 flex-col overflow-y-auto py-8 justify-start px-6  lg:px-8">
+          <div className="   flex justify-between  items-center ">
+            <div className="tooltip tooltip-bottom " data-tip="Go back to Home">
+              <button
+                id="home"
+                onClick={() => navigate("/")}
+                className="  btn btn-circle"
+              >
+                <IoMdArrowBack className="text-2xl" />
+              </button>
+            </div>
+            <div>
+              <Theme />
+            </div>
+          </div>
+          <div
+            onClick={() => navigate("/")}
+            className="flex items-center justify-center cursor-pointer space-x-2 pb-4"
+          >
+            <img
+              src="/logo.jpeg"
+              alt="PlaceLine Logo"
+              className="w-10 h-10 rounded-full object-cover"
+            />
+            <span className="text-xl font-bold">PlaceLine</span>
+          </div>
           <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-            <h2 className="mt-4 text-center text-2xl font-bold leading-9 tracking-tight">
+            {/* <h2 className="mt-4 text-center text-2xl font-bold leading-9 tracking-tight">
               Sign Up
-            </h2>
-            <div className="mt-2 text-sm font-medium  cursor-pointer">
+            </h2> */}
+            <div className="mt-4 text-sm font-medium  cursor-pointer">
               <span>Already have an account?</span>
               <span
                 className="text-accent ml-1"
-                onClick={() => navigate("/signup")}
+                onClick={() => navigate("/login")}
               >
                 Sign In
               </span>

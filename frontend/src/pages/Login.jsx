@@ -2,16 +2,17 @@ import React, { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { IoMdEye, IoMdEyeOff } from "react-icons/io";
+import { IoMdArrowBack, IoMdEye, IoMdEyeOff } from "react-icons/io";
 import { loginValidationSchema } from "../utils/FormSchema";
 import loginBgImage from "../assets/login.png";
 import useAuthApi from "../customHooks/useAuthApi";
 import GoogleAuth from "../Components/GoogleAuth";
+import Theme from "../Components/Theme";
 const Login = () => {
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
 
-  const { isLoading, loginApim, handleGoogleLogin, googleLoading } =
+  const { isLoading, loginApi, handleGoogleLogin, googleLoading } =
     useAuthApi();
   const {
     handleSubmit,
@@ -39,12 +40,37 @@ const Login = () => {
           className="w-full h-full object-cover"
         />
       </div>
-      <div className="flex min-h-screen flex-1 flex-col justify-center px-6 py-12 lg:px-8">
+      <div className="flex  min-h-screen flex-1 flex-col justify-start py-8 overflow-y-auto px-6 lg:px-8">
+        <div className="   flex justify-between  items-center  ">
+          <div className="tooltip tooltip-bottom   " data-tip="Go back to Home">
+            <button
+              id="home"
+              onClick={() => navigate("/")}
+              className="  btn btn-circle"
+            >
+              <IoMdArrowBack className="text-2xl" />
+            </button>
+          </div>
+          <div>
+            <Theme />
+          </div>
+        </div>
+        <div
+          onClick={() => navigate("/")}
+          className="flex items-center justify-center cursor-pointer space-x-2  pb-4 "
+        >
+          <img
+            src="/logo.jpeg"
+            alt="PlaceLine Logo"
+            className="w-10 h-10 rounded-full object-cover"
+          />
+          <span className="text-xl font-bold">PlaceLine</span>
+        </div>
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-          <h2 className="mt-4 text-center text-xl font-bold leading-9 tracking-tight">
+          {/* <h2 className="mt-4 text-center text-xl font-bold leading-9 tracking-tight">
             Welcome Back 😊
-          </h2>
-          <div className="mt-2 text-sm font-medium  cursor-pointer">
+          </h2> */}
+          <div className="mt-4 text-sm font-medium  cursor-pointer">
             <span>Don't have an account?</span>
             <span
               className="text-accent ml-1"
