@@ -70,11 +70,12 @@ const Courses = () => {
                   ) : (
                     <>{course?.courseName}</>
                   )}
-                  <div className="badge badge-secondary text-sm">NEW</div>
+                  {/* <div className="badge badge-secondary text-sm">NEW</div> */}
                 </h2>
                 <p className="mt-2 text-sm line-clamp-6">
                   {course?.description}
                 </p>
+                <p className="text-accent font-semibold"> ₹ {course?.price}</p>
                 <div className=" mt-4 flex justify-between items-start gap-2">
                   <div className="flex items-center gap-2 flex-wrap ">
                     {course?.tags?.length > 0 &&
@@ -89,16 +90,23 @@ const Courses = () => {
                   </div>
                   {authUser?._id === "66a37293d6c9e1a405de3d37" && (
                     <div className="flex items-center gap-2">
-                      <RiEditCircleFill
-                        className="text-xl cursor-pointer"
-                        onClick={() =>
-                          navigate(`/edit-course/?id=${course?._id}`)
-                        }
-                      />
-                      <MdDelete
-                        className="text-xl cursor-pointer"
-                        onClick={() => handleCourseDelete(course?._id)}
-                      />
+                      <div
+                        className="tooltip  tooltip-error"
+                        data-tip="Delete "
+                      >
+                        <MdDelete
+                          className="text-xl  cursor-pointer text-error"
+                          onClick={() => handleCourseDelete(course?._id)}
+                        />
+                      </div>
+                      <div className="tooltip tooltip-info" data-tip="Edit ">
+                        <RiEditCircleFill
+                          className="text-xl cursor-pointer text-info"
+                          onClick={() =>
+                            navigate(`/edit-course/?id=${course?._id}`)
+                          }
+                        />
+                      </div>
                     </div>
                   )}
                 </div>

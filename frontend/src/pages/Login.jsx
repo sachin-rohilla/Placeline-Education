@@ -6,11 +6,13 @@ import { IoMdEye, IoMdEyeOff } from "react-icons/io";
 import { loginValidationSchema } from "../utils/FormSchema";
 import loginBgImage from "../assets/login.png";
 import useAuthApi from "../customHooks/useAuthApi";
+import GoogleAuth from "../Components/GoogleAuth";
 const Login = () => {
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
 
-  const { isLoading, loginApi } = useAuthApi();
+  const { isLoading, loginApim, handleGoogleLogin, googleLoading } =
+    useAuthApi();
   const {
     handleSubmit,
     reset,
@@ -42,9 +44,18 @@ const Login = () => {
           <h2 className="mt-4 text-center text-xl font-bold leading-9 tracking-tight">
             Welcome Back 😊
           </h2>
+          <div className="mt-2 text-sm font-medium  cursor-pointer">
+            <span>Don't have an account?</span>
+            <span
+              className="text-accent ml-1"
+              onClick={() => navigate("/signup")}
+            >
+              Sign Up
+            </span>
+          </div>
         </div>
 
-        <div className="mt-6 sm:mx-auto sm:w-full sm:max-w-sm">
+        <div className="mt-4 sm:mx-auto sm:w-full sm:max-w-sm">
           <form
             className="space-y-6"
             method="POST"
@@ -127,13 +138,13 @@ const Login = () => {
                 {isLoading ? "Loading..." : "Login"}
               </button>
             </div>
+            <div className="divider text-sm font-medium">OR</div>
+            <GoogleAuth
+              isLoading={googleLoading}
+              handleClick={handleGoogleLogin}
+              text={"Login with Google"}
+            />
           </form>
-          <div
-            onClick={() => navigate("/signup")}
-            className="divider text-sm font-medium text-accent cursor-pointer"
-          >
-            OR SIGNUP
-          </div>
         </div>
       </div>
     </div>

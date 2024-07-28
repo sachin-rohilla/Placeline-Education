@@ -6,13 +6,15 @@ import { IoMdEye, IoMdEyeOff } from "react-icons/io";
 import { signupValidationSchema } from "../utils/FormSchema";
 import loginBgImage from "../assets/login.png";
 import useAuthApi from "../customHooks/useAuthApi";
+import GoogleAuth from "../Components/GoogleAuth";
 
 const SignUp = () => {
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
-  const { isLoading, signUpApi } = useAuthApi();
+  const { isLoading, signUpApi, handleGoogleLogin, googleLoading } =
+    useAuthApi();
 
   const {
     handleSubmit,
@@ -60,11 +62,20 @@ const SignUp = () => {
         <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
           <div className="sm:mx-auto sm:w-full sm:max-w-sm">
             <h2 className="mt-4 text-center text-2xl font-bold leading-9 tracking-tight">
-              Create an Account!
+              Sign Up
             </h2>
+            <div className="mt-2 text-sm font-medium  cursor-pointer">
+              <span>Already have an account?</span>
+              <span
+                className="text-accent ml-1"
+                onClick={() => navigate("/signup")}
+              >
+                Sign In
+              </span>
+            </div>
           </div>
 
-          <div className="mt-6 sm:mx-auto sm:w-full sm:max-w-sm">
+          <div className="mt-4 sm:mx-auto sm:w-full sm:max-w-sm">
             <form
               className="space-y-6"
               method="POST"
@@ -202,14 +213,14 @@ const SignUp = () => {
                   {isLoading ? "Loading..." : "Sign Up"}
                 </button>
               </div>
-            </form>
+              <div className="divider text-sm font-medium">OR</div>
 
-            <div
-              onClick={() => navigate("/login")}
-              className="divider text-sm font-medium text-accent cursor-pointer"
-            >
-              OR LOGIN
-            </div>
+              <GoogleAuth
+                isLoading={googleLoading}
+                handleClick={handleGoogleLogin}
+                text={"Continue with Google"}
+              />
+            </form>
           </div>
         </div>
       </div>

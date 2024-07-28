@@ -93,3 +93,51 @@ export const logOut = async (req, res) => {
     return res.status(500).json({ message: "Internal server error" });
   }
 };
+
+export const googleSignIn = async (req, res) => {
+  try {
+    const { email, fullName, profilePic } = req.body;
+
+    let user = await User.findOne({ email });
+
+    if (user) {
+      // Use the existing user and generate a token
+      generateTokenAndSetCookie(user._id, res);
+
+      const { password, ...userData } = user._doc;
+      return res
+        .status(200)
+        .json({ message: "Login successfully", data: userData });
+    } else {
+      // Create a new user if one doesn't exist
+      const generatePassword =
+        Math.random().toString(36).slice(-8) +
+        Math.random().toString(36).slice(-8);
+      const salt = await bcrypt.genSalt(10);
+      const hashedPassword = await bcrypt.hash(generatePassword, salt);
+
+      const newUser = new User({
+        fullName,
+        email,
+        profilePic: profilePic || "",
+        password: hashedPassword,
+      });
+
+      const savedUser = await newUser.save();
+
+      // Generate and set JWT token
+      generateTokenAndSetCookie(savedUser._id, res);
+
+      const { password, ...userData } = savedUser._doc;
+      return res
+        .status(200)
+        .json({
+          message: "User created and logged in successfully",
+          data: userData,
+        });
+    }
+  } catch (error) {
+    console.error("Error in googleSignIn controller:", error.message);
+    return res.status(500).json({ message: "Internal server error" });
+  }
+};
