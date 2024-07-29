@@ -8,10 +8,7 @@ const Theme = () => {
     setIsDark((prevIsDark) => !prevIsDark);
   };
   return (
-    <div
-      className="tooltip tooltip-bottom flex justify-end  "
-      //   data-tip="Change Theme"
-    >
+    <div className="tooltip tooltip-bottom flex justify-end  ">
       <button className="btn btn-circle" onClick={toggleTheme}>
         <input type="checkbox" className="hidden" value={isDark} />
 

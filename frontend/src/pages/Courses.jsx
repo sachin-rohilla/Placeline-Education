@@ -31,7 +31,7 @@ const Courses = () => {
   }
 
   return (
-    <div className="">
+    <div>
       {authUser?._id === "66a37293d6c9e1a405de3d37" && (
         <div className="w-full flex justify-end">
           <button
