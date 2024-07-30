@@ -33,7 +33,7 @@ const Home = () => {
       <div className="flex-1 max-w-sm md:max-w-md lg:max-w-lg">
         <img src={fourImage} alt="home" className="w-full h-auto rounded-xl " />
       </div>
-      <div className="flex-1 max-w-lg ">
+      {/* <div className="flex-1 max-w-lg ">
         <h1 className="text-4xl md:text-5xl font-extrabold  mb-6">
           Unlock Your Potential with Education
         </h1>
@@ -49,7 +49,7 @@ const Home = () => {
           <span className="mr-2">Learn technologies like:</span>
           <span className="font-mono">{displayText}</span>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 };
