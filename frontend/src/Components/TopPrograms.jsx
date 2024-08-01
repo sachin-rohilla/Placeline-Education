@@ -5,18 +5,14 @@ import { useAppContext } from "../context/AppContext";
 import CourseSkeleton from "../Components/CourseSkeleton";
 import { RiEditCircleFill } from "react-icons/ri";
 import { MdDelete } from "react-icons/md";
-const Courses = () => {
+const TopProgram = () => {
+  const limit = 3;
   const navigate = useNavigate();
   const { courses, isDark, authUser } = useAppContext();
-  const { getCoursesApi, deleteCourseApi, isLoading } = useCoursesApi();
-
-  const handleCourseDelete = async (courseId) => {
-    await deleteCourseApi(courseId);
-  };
+  const { getCoursesApi, isLoading } = useCoursesApi();
 
   useEffect(() => {
-    getCoursesApi();
-    window.scrollTo(0, 0, { behavior: "smooth" });
+    getCoursesApi(limit);
   }, []);
 
   if (isLoading) {
@@ -33,19 +29,9 @@ const Courses = () => {
 
   return (
     <div>
-      {authUser?._id === "66a37293d6c9e1a405de3d37" && (
-        <div className="w-full flex justify-end">
-          <button
-            id="add-course"
-            title="Add Course"
-            onClick={() => navigate("/add-course")}
-            className="btn bg-accent text-white w-full sm:w-44 mb-4"
-          >
-            Add Course
-          </button>
-        </div>
-      )}
-      <h1 className="text-3xl font-bold mb-4 text-center">Premium Courses</h1>
+      <h1 className="text-2xl font-medium mb-4 text-center text-secondary mt-20">
+        EXPLORE TOP PROGRAMS
+      </h1>
 
       <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {isLoading ? (
@@ -89,35 +75,22 @@ const Courses = () => {
                         </div>
                       ))}
                   </div>
-                  {authUser?._id === "66a37293d6c9e1a405de3d37" && (
-                    <div className="flex items-center gap-2">
-                      <div
-                        className="tooltip  tooltip-error"
-                        data-tip="Delete "
-                      >
-                        <MdDelete
-                          className="text-xl  cursor-pointer text-error"
-                          onClick={() => handleCourseDelete(course?._id)}
-                        />
-                      </div>
-                      <div className="tooltip tooltip-info" data-tip="Edit ">
-                        <RiEditCircleFill
-                          className="text-xl cursor-pointer text-info"
-                          onClick={() =>
-                            navigate(`/edit-course/?id=${course?._id}`)
-                          }
-                        />
-                      </div>
-                    </div>
-                  )}
                 </div>
               </div>
             </div>
           ))
         )}
       </div>
+      <div className="flex justify-center">
+        <button
+          onClick={() => navigate("/courses")}
+          className="btn bg-accent lg:rounded-full mt-8 text-white w-full sm:w-44 "
+        >
+          View All Courses
+        </button>
+      </div>
     </div>
   );
 };
 
-export default Courses;
+export default TopProgram;

@@ -39,10 +39,10 @@ const useCoursesApi = () => {
       setIsLoading(false);
     }
   };
-  const getCoursesApi = async () => {
+  const getCoursesApi = async (limit = 10) => {
     try {
       setIsLoading(true);
-      const response = await fetch(`${API_URL}/api/courses`, {
+      const response = await fetch(`${API_URL}/api/courses?limit=${limit}`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",

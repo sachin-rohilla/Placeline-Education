@@ -22,7 +22,8 @@ export const createCourse = async (req, res) => {
 
 export const getCourses = async (req, res) => {
   try {
-    const courses = await Course.find();
+    const limit = parseInt(req.query.limit) || 10;
+    const courses = await Course.find().limit(limit);
     return res
       .status(200)
       .json({ message: "Courses fetched successfully", courses });
