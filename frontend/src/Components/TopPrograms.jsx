@@ -5,6 +5,7 @@ import { useAppContext } from "../context/AppContext";
 import CourseSkeleton from "../Components/CourseSkeleton";
 import { RiEditCircleFill } from "react-icons/ri";
 import { MdDelete } from "react-icons/md";
+import { BsArrowRight } from "react-icons/bs";
 const TopProgram = () => {
   const limit = 3;
   const navigate = useNavigate();
@@ -87,6 +88,7 @@ const TopProgram = () => {
           className="btn bg-accent lg:rounded-full mt-8 text-white w-full sm:w-44 "
         >
           View All Courses
+          <BsArrowRight className="text-xl" />
         </button>
       </div>
     </div>

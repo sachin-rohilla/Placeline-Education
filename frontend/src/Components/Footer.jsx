@@ -4,12 +4,13 @@ import {
   FaTwitter,
   FaInstagram,
   FaLinkedinIn,
+  FaMapMarkerAlt,
 } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
 export default function Footer() {
   return (
-    <footer className="  py-12 px-4  lg:px-36 ">
+    <footer className="  py-12 px-8   ">
       <div className="container mx-auto  border-t   border-opacity-30">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mt-8">
           <div>
@@ -73,8 +74,10 @@ export default function Footer() {
           </div>
           <div>
             <h3 className="text-lg font-semibold mb-4">Contact Us</h3>
-            <p className="text-sm mb-2">Brass Market, Rewari (Haryana)</p>
-            <p className="text-sm mb-2">City, State, ZIP Code</p>
+            <p className="text-sm mb-2 flex items-center gap-2">
+              <FaMapMarkerAlt className="" />
+              Brass Market, Rewari (Haryana)
+            </p>
             <p className="text-sm mb-2">Email: omdeep@placeline.com</p>
             <p className="text-sm">Phone: +91-123-456-7890</p>
           </div>

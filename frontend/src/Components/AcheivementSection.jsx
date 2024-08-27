@@ -8,7 +8,7 @@ const AcheivementSection = () => {
           <div
             className="text-white p-10 rounded-lg shadow-lg"
             style={{
-              backgroundImage: "linear-gradient(to right, #a8e063, #56ab2f)", // Green gradient
+              backgroundImage: "linear-gradient(to right, #a8e063, #56ab2f)",
             }}
           >
             <h3 className="text-2xl font-bold">500+</h3>
@@ -20,7 +20,7 @@ const AcheivementSection = () => {
           <div
             className="text-white p-10 rounded-lg shadow-lg"
             style={{
-              backgroundImage: "linear-gradient(to right, #ff6b6b, #f06595)", // Pink gradient
+              backgroundImage: "linear-gradient(to right, #ff6b6b, #f06595)",
             }}
           >
             <h3 className="text-2xl font-bold">100+</h3>
@@ -32,7 +32,7 @@ const AcheivementSection = () => {
           <div
             className="text-white p-10 rounded-lg shadow-lg"
             style={{
-              backgroundImage: "linear-gradient(to right, #6a11cb, #2575fc)", // Blue gradient
+              backgroundImage: "linear-gradient(to right, #6a11cb, #2575fc)",
             }}
           >
             <h3 className="text-2xl font-bold">100%</h3>
@@ -44,7 +44,7 @@ const AcheivementSection = () => {
           <div
             className="text-white p-10 rounded-lg shadow-lg"
             style={{
-              backgroundImage: "linear-gradient(to right, #f9d423, #ff4e50)", // Yellow to red gradient
+              backgroundImage: "linear-gradient(to right, #f9d423, #ff4e50)",
             }}
           >
             <h3 className="text-2xl font-bold">10+</h3>

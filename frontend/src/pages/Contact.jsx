@@ -41,14 +41,16 @@ const Contact = () => {
           </div>
         </div>
 
-        <div className="bg-white p-6 rounded-lg shadow-lg">
+        <div
+          className={`p-6 rounded-lg shadow-lg ${isDark ? "bg-neutral" : ""}`}
+        >
           <h2 className="text-2xl font-semibold  mb-6">Find Us</h2>
           <div className="relative w-full h-64 rounded-lg overflow-hidden">
             <iframe
-              className="absolute inset-0 w-full h-full"
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3164.437584536119!2d-122.0842496850891!3d37.42206597982568!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x808fb7d69c51c013%3A0xb04e90ae30e2b591!2sGoogleplex!5e0!3m2!1sen!2sus!4v1648775085902!5m2!1sen!2sus"
-              allowFullScreen
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d14066.135004932532!2d76.6057329090891!3d28.191091828411817!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390d5073ef19ebc3%3A0xf6fdaceda43b7501!2sBrass%20Market%2C%20Rewari%2C%20Haryana%20123401!5e0!3m2!1sen!2sin!4v1724750179910!5m2!1sen!2sin"
+              allowfullscreen=""
               loading="lazy"
+              className="absolute inset-0 w-full h-full"
             ></iframe>
           </div>
         </div>
