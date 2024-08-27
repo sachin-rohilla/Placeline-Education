@@ -24,13 +24,13 @@ function App() {
           <Route path="/" element={<Layout />}>
             <Route index element={<Home />} />
             <Route path="courses" element={<Courses />} />
-            <Route path="add-course" element={<AddCourse />} />
-            <Route path="edit-course" element={<EditCourse />} />
+            {/* <Route path="add-course" element={<AddCourse />} /> */}
+            {/* <Route path="edit-course" element={<EditCourse />} /> */}
             <Route path="about" element={<AboutUs />} />
             <Route path="contact" element={<Contact />} />
           </Route>
           <Route path="*" element={<PageNotFound />} />
-          <Route
+          {/* <Route
             path="/login"
             element={
               <ProtectedRoutes>
@@ -45,7 +45,7 @@ function App() {
                 <SignUp />
               </ProtectedRoutes>
             }
-          />
+          /> */}
         </Routes>
       </Suspense>
       <Toaster />
