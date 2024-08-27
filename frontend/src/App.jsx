@@ -8,12 +8,13 @@ import ProtectedRoutes from "./Components/ProtectedRoutes";
 const Login = lazy(() => import("./pages/Login"));
 const SignUp = lazy(() => import("./pages/SignUp"));
 const Home = lazy(() => import("./pages/Home"));
+const Layout = lazy(() => import("./Layout/Layout"));
 const Courses = lazy(() => import("./pages/Courses"));
 const AddCourse = lazy(() => import("./pages/AddCourse"));
 const EditCourse = lazy(() => import("./pages/EditCourse"));
 const PageNotFound = lazy(() => import("./pages/PageNotFound"));
 const AboutUs = lazy(() => import("./pages/AboutUs"));
-const Layout = lazy(() => import("./Layout/Layout"));
+const Contact = lazy(() => import("./pages/Contact"));
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
             <Route path="add-course" element={<AddCourse />} />
             <Route path="edit-course" element={<EditCourse />} />
             <Route path="about" element={<AboutUs />} />
+            <Route path="contact" element={<Contact />} />
           </Route>
           <Route path="*" element={<PageNotFound />} />
           <Route

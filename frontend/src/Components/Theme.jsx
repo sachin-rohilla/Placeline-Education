@@ -13,9 +13,9 @@ const Theme = () => {
         <input type="checkbox" className="hidden" value={isDark} />
 
         {isDark ? (
-          <GoSun className={` text-xl`} />
+          <GoSun className={` text-xl`} title="Light" />
         ) : (
-          <GoMoon className={` text-xl`} />
+          <GoMoon className={` text-xl`} title="Dark" />
         )}
       </button>
     </div>

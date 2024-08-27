@@ -1,16 +1,17 @@
 import React from "react";
 import Navbar from "../Components/Navbar";
 import { Outlet } from "react-router";
+import Footer from "../Components/Footer";
 
 const Layout = () => {
   return (
-    <div>
+    <>
       <Navbar />
-
-      <main className="mt-20 p-4  lg:px-16">
+      <main className="mt-20 p-4  lg:px-36">
         <Outlet />
       </main>
-    </div>
+      <Footer />
+    </>
   );
 };
 

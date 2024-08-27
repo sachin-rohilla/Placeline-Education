@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useAppContext } from "../context/AppContext";
 import useAuthApi from "../customHooks/useAuthApi";
 import { useNavigate } from "react-router";
@@ -14,6 +14,20 @@ const Navbar = () => {
   const handleLogOut = async () => {
     await logOutApi();
   };
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth >= 1024) {
+        setIsMobileMenuOpen(false);
+      }
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
 
   return (
     <>
@@ -45,13 +59,17 @@ const Navbar = () => {
             <div
               onClick={() => navigate("/")}
               className="flex items-center cursor-pointer space-x-2"
+              title="PlaceLine"
             >
               <img
                 src="/logo.jpeg"
                 alt="PlaceLine Logo"
                 className="w-10 h-10 rounded-full object-cover"
               />
-              <span className="text-xl font-bold">PlaceLine</span>
+              <span>
+                <span className="text-xl font-bold">PlaceLine</span>
+                <p className="text-xs mt-0.5">JOB ORIENTED TRAINING</p>
+              </span>
             </div>
           </div>
 
@@ -71,17 +89,9 @@ const Navbar = () => {
           <div className="flex items-center space-x-4">
             {/* Theme Toggle */}
             <Theme />
-            {/* Search Input */}
-            <div className="form-control hidden lg:block">
-              <input
-                type="text"
-                placeholder="Search"
-                className="input input-bordered w-24 md:w-auto"
-              />
-            </div>
-
             {/* Profile Dropdown */}
-            {authUser ? (
+            {/* Uncomment and customize as needed */}
+            {/* {authUser ? (
               <div className="dropdown dropdown-end">
                 <button
                   tabIndex={0}
@@ -128,7 +138,7 @@ const Navbar = () => {
               >
                 Login
               </button>
-            )}
+            )} */}
           </div>
         </div>
       </header>
@@ -158,13 +168,18 @@ const Navbar = () => {
               setIsMobileMenuOpen(false);
             }}
             className="flex justify-center mt-2 items-center cursor-pointer space-x-2"
+            title="PlaceLine"
           >
             <img
               src="/logo.jpeg"
               alt="PlaceLine Logo"
               className="w-10 h-10 rounded-full object-cover"
             />
-            <span className="text-xl font-bold">PlaceLine</span>
+
+            <span>
+              <span className="text-xl font-bold">PlaceLine</span>
+              <p className="text-xs mt-0.5">JOB ORIENTED TRAINING</p>
+            </span>
           </div>
           <div className="divider"></div>
           <div className="flex flex-col space-y-4">
